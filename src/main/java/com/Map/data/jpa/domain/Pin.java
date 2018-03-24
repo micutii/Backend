@@ -17,6 +17,12 @@ public class Pin {
 	private double longitude;
 	@Column(name = "ID_TYPE")
 	private int idType;
+	@Column(name = "CONTACT")
+	private String contact;
+	@Column(name = "DESCRIPTION")
+	private String description;
+	@Column(name = "PERCENTAGE")
+	private String percentage;
 
 	public int getIdPin() {
 		return idPin;
@@ -56,5 +62,29 @@ public class Pin {
 
 	public void setIdType(int idType) {
 		this.idType = idType;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(String percentage) {
+		this.percentage = percentage;
 	}
 }
