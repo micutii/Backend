@@ -12,10 +12,12 @@ public class User {
     private String email;
     @Column(name = "PASSWORD")
     private String password;
-    @Column(name = "ADMIN")
-    private boolean admin;
+    @Column(name = "ROLE")
+    private String role;
     @Column(name = "FULL_NAME")
     private String fullName;
+    @Column(name = "VALID")
+    private boolean valid;
 
     public int getIdUser() {
         return idUser;
@@ -27,10 +29,6 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public boolean isAdmin() {
-        return admin;
     }
 
     public String getFullName() {
@@ -45,11 +43,27 @@ public class User {
         this.password = password;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 }

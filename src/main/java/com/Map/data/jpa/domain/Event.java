@@ -53,5 +53,7 @@ public class Event {
         this.details = details;
     }
 
-
+    public void setIdEvent(int idEvent) {
+        this.idEvent = idEvent;
+    }
 }

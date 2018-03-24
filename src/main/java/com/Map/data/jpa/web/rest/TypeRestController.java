@@ -33,7 +33,7 @@ public class TypeRestController {
         List<Type> types = typeService.getTypes();
         if(types.isEmpty())
         {
-            return new ResponseEntity<List<Type>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Type>>(HttpStatus.NOT_FOUND);
 
         }
         return new ResponseEntity<List<Type>>(types, HttpStatus.OK);
@@ -46,7 +46,7 @@ public class TypeRestController {
         {
             return new ResponseEntity<Type>(type, HttpStatus.CREATED);
         }
-        return new ResponseEntity<Type>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Type>(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(
@@ -55,9 +55,10 @@ public class TypeRestController {
     public ResponseEntity<Type> updateType(@PathVariable("id") int idType, @RequestBody Type type){
         Type oldType = typeService.getType(idType);
         if(oldType== null){
-            return new ResponseEntity<Type>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Type>(HttpStatus.NOT_FOUND);
         }
         else{
+            type.setIdType(idType);
             typeService.saveType(type);
             return new ResponseEntity<Type>(type, HttpStatus.OK);
         }

@@ -10,6 +10,8 @@ public class Type {
     private int idType;
     @Column(name = "TYPE_NAME")
     private String typeName;
+    @Column(name = "COLOR")
+    private String color;
 
     public String getTypeName() {
         return typeName;
@@ -23,5 +25,15 @@ public class Type {
         return idType;
     }
 
+    public void setIdType(int idType) {
+        this.idType = idType;
+    }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

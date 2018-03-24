@@ -6,8 +6,7 @@ import java.util.List;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
     List<User> findAll();
-    List<User> findByIdUser(int id);
-    List<User> findByEmail(String email);
-    List<User> findByAdmin(boolean isAdmin);
+    User findByIdUser(int id);
+    User findByEmail(String email);
     List<User> findByFullName(String fullName);
 }

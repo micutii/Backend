@@ -32,7 +32,7 @@ public class PinRestController {
         List<Pin> pins = pinService.getPins(idType);
         if(pins.isEmpty())
         {
-            return new ResponseEntity<List<Pin>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Pin>>(HttpStatus.NOT_FOUND);
 
         }
         return new ResponseEntity<List<Pin>>(pins, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class PinRestController {
         {
             return new ResponseEntity<Pin>(pin, HttpStatus.CREATED);
         }
-        return new ResponseEntity<Pin>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Pin>(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(
@@ -56,7 +56,7 @@ public class PinRestController {
     public ResponseEntity<Pin> updatePin(@PathVariable("id") int idPin, @RequestBody Pin pin){
         Pin oldPin = pinService.getPin(idPin);
         if(oldPin == null){
-            return new ResponseEntity<Pin>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Pin>(HttpStatus.NOT_FOUND);
         }
         else{
             pin.setIdPin(idPin);
