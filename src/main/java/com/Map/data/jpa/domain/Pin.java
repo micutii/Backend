@@ -25,6 +25,16 @@ public class Pin {
 	private String percentage;
 	@Column(name = "STATE")
 	private int state;
+	@Column(name = "NAME")
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public int getIdPin() {
 		return idPin;
