@@ -32,18 +32,13 @@ class PinServiceImpl implements PinService {
 	private PinRepository pinRepository;
 
 	@Override
-	public Pin getPin(int id) {
-		return pinRepository.findOne(id);
+	public Pin getPin(int idPin) {
+		return pinRepository.findById(idPin).get();
 	}
 
 	@Override
-	public List<Pin> getPins(Integer type) {
-		if(type != null){
-			return pinRepository.findByIdType(type);
-		}
-		else{
+	public List<Pin> getPins() {
 			return pinRepository.findAll();
-		}
 	}
 
 
@@ -57,6 +52,11 @@ class PinServiceImpl implements PinService {
 
 	@Override
 	public void removePin(int idPin) {
-		pinRepository.delete(idPin);
+		pinRepository.deleteById(idPin);
+	}
+
+	@Override
+	public List<Pin> getValidPins(){
+		return pinRepository.findValidPins();
 	}
 }

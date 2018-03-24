@@ -19,7 +19,7 @@ public class TypeServiceImpl implements  TypeService {
 
     @Override
     public Type getType(int id){
-        return typeRepository.findOne(id);
+        return typeRepository.findById(id).get();
     }
 
     @Override
@@ -35,6 +35,6 @@ public class TypeServiceImpl implements  TypeService {
     }
 
     public void removeType(int idType){
-        typeRepository.delete(idType);
+        typeRepository.deleteById(idType);
     }
 }

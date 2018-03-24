@@ -25,10 +25,12 @@ public interface PinService {
 
 	Pin getPin(int id);
 
-	List<Pin> getPins(Integer type);
+    List<Pin> getPins();
 
-	boolean savePin(Pin pin);
+    List<Pin> getValidPins();
 
-	void removePin(int idPin);
+    boolean savePin(Pin pin);
+
+    void removePin(int idPin);
 
 }

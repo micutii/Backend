@@ -27,6 +27,8 @@ public class Pin {
 	private int state;
 	@Column(name = "NAME")
 	private String name;
+	@Column(name = "USER_NAME")
+	private String userName;
 
 	public String getName() {
 		return name;
@@ -108,4 +110,11 @@ public class Pin {
 		this.state = state;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }

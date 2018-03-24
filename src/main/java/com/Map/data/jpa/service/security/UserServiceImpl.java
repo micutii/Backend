@@ -9,6 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by easyw on 24-Mar-18.
  */
@@ -19,14 +21,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User save(User user) {
-        return userRepository.save(user);
+    public boolean saveUser(User user) {
+        userRepository.save(user);
+        return true;
     }
 
     @Override
     @Transactional
-    public User findById(int id) {
-        return userRepository.findOne(id);
+    public User getUser(int id) {
+        return userRepository.findById(id).get();
     }
 
     @Override
@@ -37,9 +40,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void delete(int id) {
-        User user = findById(id);
+    public void deleteUser(int id) {
+        User user = getUser(id);
         user.setValid(false);
         userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 }

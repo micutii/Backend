@@ -17,7 +17,7 @@ public class EventServiceImpl implements EventService{
     private EventRepository eventRepository;
     @Override
     public Event getEvent(int id) {
-        return eventRepository.findOne(id);
+        return eventRepository.findById(id).get();
     }
 
     @Override
@@ -35,6 +35,6 @@ public class EventServiceImpl implements EventService{
 
     @Override
     public void removeEvent(int idEvent) {
-        eventRepository.delete(idEvent);
+        eventRepository.deleteById(idEvent);
     }
 }
