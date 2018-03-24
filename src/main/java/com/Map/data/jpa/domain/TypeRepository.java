@@ -7,6 +7,6 @@ import java.util.List;
 public interface TypeRepository extends CrudRepository<Type, Integer> {
 
     List<Type> findAll();
-    List<Type> findByIdType(int idType);
     List<Type> findByTypeName(String name);
+    Type findByIdType(int idType);
 }

@@ -21,6 +21,7 @@ import com.Map.data.jpa.domain.Pin;
 import com.Map.data.jpa.domain.PinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ class PinServiceImpl implements PinService {
 
 	@Override
 	public Pin getPin(int id) {
-		return this.pinRepository.findOne(id);
+		return pinRepository.findOne(id);
 	}
 
 	@Override

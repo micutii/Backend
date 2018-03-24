@@ -1,8 +1,9 @@
-package com.Map.data.jpa.web.rest.Pin;
+package com.Map.data.jpa.web.rest;
 
 import com.Map.data.jpa.domain.Pin;
 import com.Map.data.jpa.service.Pin.PinService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,9 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(value = "/api/pin",
+@RequestMapping(value = "/api/pins",
         produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin
 public class PinRestController {
 
     @Autowired
@@ -65,7 +67,7 @@ public class PinRestController {
 
     @RequestMapping(
             value = "/delete/{id}",
-            method = RequestMethod.POST)
+            method = RequestMethod.DELETE)
     public ResponseEntity<Pin> createPin(@PathVariable("id") int idPin){
 
         pinService.removePin(idPin);
