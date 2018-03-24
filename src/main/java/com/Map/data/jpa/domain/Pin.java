@@ -23,6 +23,8 @@ public class Pin {
 	private String description;
 	@Column(name = "PERCENTAGE")
 	private String percentage;
+	@Column(name = "STATE")
+	private int state;
 
 	public int getIdPin() {
 		return idPin;
@@ -87,4 +89,13 @@ public class Pin {
 	public void setPercentage(String percentage) {
 		this.percentage = percentage;
 	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
 }

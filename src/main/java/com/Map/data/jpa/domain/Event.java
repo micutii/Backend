@@ -14,8 +14,8 @@ public class Event {
     private String name;
     @Column(name = "DETAILS")
     private String details;
-    @Column(name = "APPROVED")
-    private boolean approved;
+    @Column(name = "STATE")
+    private int state;
 
     public int getIdPin() {
         return idPin;
@@ -37,8 +37,12 @@ public class Event {
         return details;
     }
 
-    public boolean isApproved() {
-        return approved;
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     public void setName(String name) {
@@ -49,8 +53,5 @@ public class Event {
         this.details = details;
     }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
-    }
 
 }

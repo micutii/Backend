@@ -8,6 +8,6 @@ public interface EventRepository extends CrudRepository<Event, Integer> {
 
     List<Event> findAll();
     List<Event> findByIdEvent(int id);
-    List<Event> findByApproved(boolean approved);
+    List<Event> findByState(int state);
     List<Event> findByIdPin(int idPin);
 }
