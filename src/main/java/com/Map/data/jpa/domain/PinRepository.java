@@ -8,4 +8,5 @@ public interface PinRepository extends CrudRepository<Pin, Integer> {
 
 	List<Pin> findAll();
 
+	List<Pin> findByIdType(int idType);
 }

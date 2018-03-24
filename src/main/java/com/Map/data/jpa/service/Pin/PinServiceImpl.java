@@ -22,6 +22,8 @@ import com.Map.data.jpa.domain.PinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 class PinServiceImpl implements PinService {
 
@@ -31,5 +33,29 @@ class PinServiceImpl implements PinService {
 	@Override
 	public Pin getPin(int id) {
 		return this.pinRepository.findOne(id);
+	}
+
+	@Override
+	public List<Pin> getPins(Integer type) {
+		if(type != null){
+			return pinRepository.findByIdType(type);
+		}
+		else{
+			return pinRepository.findAll();
+		}
+	}
+
+
+	@Override
+	public boolean savePin(Pin pin) {
+		 if(pinRepository.save(pin) != null){
+		 	return true;
+		 }
+		 return false;
+	}
+
+	@Override
+	public void removePin(int idPin) {
+		pinRepository.delete(idPin);
 	}
 }

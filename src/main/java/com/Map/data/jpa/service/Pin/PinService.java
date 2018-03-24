@@ -19,8 +19,16 @@ package com.Map.data.jpa.service.Pin;
 
 import com.Map.data.jpa.domain.Pin;
 
+import java.util.List;
+
 public interface PinService {
 
 	Pin getPin(int id);
+
+	List<Pin> getPins(Integer type);
+
+	boolean savePin(Pin pin);
+
+	void removePin(int idPin);
 
 }
