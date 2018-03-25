@@ -1,11 +1,15 @@
 package com.Map.data.jpa.web.rest;
 
 import com.Map.data.jpa.domain.Event;
+import com.Map.data.jpa.domain.User;
 import com.Map.data.jpa.service.Event.EventService;
+import com.Map.data.jpa.service.security.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +25,20 @@ import java.util.List;
 public class EventRestController {
 
     @Autowired
+    private UserService userService;
+    @Autowired
     EventService eventService;
+
+    @RequestMapping(
+            value = "/getValid",
+            method = RequestMethod.GET)
+    public ResponseEntity<List<Event>> getValid(){
+        List<Event> events = eventService.getValidEvents();
+        if(events.isEmpty()){
+            return new ResponseEntity<List<Event>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Event>>(events,HttpStatus.OK);
+    }
 
     @RequestMapping(
             value = "/get",
@@ -34,10 +51,15 @@ public class EventRestController {
         return new ResponseEntity<List<Event>>(events,HttpStatus.OK);
     }
 
+
     @RequestMapping(
             value = "/create",
             method = RequestMethod.POST)
     public ResponseEntity<Event> createEvent(@RequestBody Event event){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByEmail(authentication.getName());
+        event.setUserName(user.getEmail());
+        event.setState(user.getRole().equals("user")? 0 : 1);
                 if(eventService.saveEvent(event)){
                     return new ResponseEntity<Event>(event, HttpStatus.OK);
                 }

@@ -16,6 +16,8 @@ public class Event {
     private String details;
     @Column(name = "STATE")
     private int state;
+    @Column(name = "USER_NAME")
+    private String userName;
 
     public int getIdPin() {
         return idPin;
@@ -55,5 +57,13 @@ public class Event {
 
     public void setIdEvent(int idEvent) {
         this.idEvent = idEvent;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

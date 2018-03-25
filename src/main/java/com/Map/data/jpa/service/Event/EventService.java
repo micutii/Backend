@@ -12,6 +12,8 @@ public interface EventService {
 
     List<Event> getEvents();
 
+    List<Event> getValidEvents();
+
     boolean saveEvent(Event event);
 
     void removeEvent(int idEvent);

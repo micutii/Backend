@@ -57,6 +57,6 @@ class PinServiceImpl implements PinService {
 
 	@Override
 	public List<Pin> getValidPins(){
-		return pinRepository.findValidPins();
+		return pinRepository.findByState(1);
 	}
 }

@@ -37,4 +37,9 @@ public class EventServiceImpl implements EventService{
     public void removeEvent(int idEvent) {
         eventRepository.deleteById(idEvent);
     }
+
+    @Override
+    public List<Event> getValidEvents(){
+        return eventRepository.findByState(1);
+    }
 }

@@ -37,9 +37,8 @@ public class PinRestController {
             value = "/getValid",
             method = RequestMethod.GET)
     public ResponseEntity<List<Pin>> getValid(){
-        List<Pin> pins = pinService.getPins();
-        if(pins.isEmpty())
-        {
+        List<Pin> pins = pinService.getValidPins();
+        if(pins.isEmpty()){
             return new ResponseEntity<List<Pin>>(HttpStatus.NOT_FOUND);
 
         }
@@ -50,9 +49,8 @@ public class PinRestController {
             value = "/get",
             method = RequestMethod.GET)
     public ResponseEntity<List<Pin>> getAll(){
-        List<Pin> pins = pinService.getValidPins();
-        if(pins.isEmpty())
-        {
+        List<Pin> pins = pinService.getPins();
+        if(pins.isEmpty()){
             return new ResponseEntity<List<Pin>>(HttpStatus.NOT_FOUND);
 
         }
@@ -65,10 +63,12 @@ public class PinRestController {
     public ResponseEntity<Pin> createPin(@RequestBody Pin pin){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByEmail(authentication.getName());
+        if(user == null ){
+            return new ResponseEntity<Pin>(HttpStatus.UNAUTHORIZED);
+        }
         pin.setUserName(user.getEmail());
         pin.setState(user.getRole().equals("user")? 0 : 1);
-        if(pinService.savePin(pin))
-        {
+        if(pinService.savePin(pin)){
             return new ResponseEntity<Pin>(pin, HttpStatus.CREATED);
         }
         return new ResponseEntity<Pin>(HttpStatus.BAD_REQUEST);
@@ -77,13 +77,13 @@ public class PinRestController {
     @RequestMapping(
             value = "/update/{id}",
             method = RequestMethod.PUT)
-    public ResponseEntity<Pin> updatePin(@PathVariable("id") int idPin, @RequestBody Pin pin){
-        Pin oldPin = pinService.getPin(idPin);
-        if(oldPin == null){
+    public ResponseEntity<Pin> updatePin(@PathVariable("id") int idPin){
+        Pin pin = pinService.getPin(idPin);
+        if(pin == null){
             return new ResponseEntity<Pin>(HttpStatus.NOT_FOUND);
         }
         else{
-            pin.setIdPin(idPin);
+            pin.setState(1);
             pinService.savePin(pin);
             return new ResponseEntity<Pin>(pin, HttpStatus.OK);
         }
@@ -93,7 +93,6 @@ public class PinRestController {
             value = "/delete/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Pin> createPin(@PathVariable("id") int idPin){
-
         pinService.removePin(idPin);
         return new ResponseEntity<Pin>(HttpStatus.OK);
     }

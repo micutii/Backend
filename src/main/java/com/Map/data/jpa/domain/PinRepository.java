@@ -11,6 +11,4 @@ public interface PinRepository extends CrudRepository<Pin, Integer> {
 
 	List<Pin> findByIdType(int idType);
 	List<Pin> findByState(int state);
-	@Query("select p from Pin p where p.state = 1")
-    List<Pin> findValidPins();
 }

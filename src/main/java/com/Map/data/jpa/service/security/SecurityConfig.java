@@ -10,8 +10,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -50,18 +56,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/login","/api/signup","/api/pins/getValid","/api/types/get").permitAll()
-                .antMatchers("/api/pins/create").permitAll() //User & admin
+                .antMatchers("/api/pins/create","/api/events/get","/api/events/create").permitAll() //User & admin
                 .antMatchers("/api/events/get",
                             "/api/pins/get",
                             "/api/pins/update/*",
                             "/api/pins/delete/*",
                             "/api/types/create",
                             "/api/types/update/*",
-                            "/api/types/delete/*").hasAnyAuthority("admin")
+                            "/api/types/delete/*").hasAuthority("admin")
                 .and().httpBasic().authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                .and().logout().logoutUrl("/logout");
+                .and().logout().logoutUrl("/logout").addLogoutHandler(new CustomLogoutHandler());
     }
 
     @Bean

@@ -1,7 +1,10 @@
 
 package com.Map.data.jpa.domain;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "Pin")
 public class Pin {
@@ -29,6 +32,12 @@ public class Pin {
 	private String name;
 	@Column(name = "USER_NAME")
 	private String userName;
+	@Column(name = "PROJECTS_FOR_WOMEN")
+	private String projForWomen;
+	@Column(name = "BENEFITS_FOR_WOMEN")
+	private String benefitsForWomen;
+	@Column(name = "MEMBERS")
+	private int members;
 
 	public String getName() {
 		return name;
@@ -116,5 +125,29 @@ public class Pin {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getProjForWomen() {
+		return projForWomen;
+	}
+
+	public void setProjForWomen(String projForWomen) {
+		this.projForWomen = projForWomen;
+	}
+
+	public String getBenefitsForWomen() {
+		return benefitsForWomen;
+	}
+
+	public void setBenefitsForWomen(String benefitsForWomen) {
+		this.benefitsForWomen = benefitsForWomen;
+	}
+
+	public int getMembers() {
+		return members;
+	}
+
+	public void setMembers(int members) {
+		this.members = members;
 	}
 }
