@@ -60,13 +60,12 @@ public class PinRestController {
     @RequestMapping(
             value = "/create",
             method = RequestMethod.POST)
-    public ResponseEntity<Pin> createPin(@RequestBody Pin pin){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByEmail(authentication.getName());
+    public ResponseEntity<Pin> createPin(@RequestBody Pin pin, @RequestParam("user") String userName){
+        User user = userService.findByEmail(userName);
         if(user == null ){
             return new ResponseEntity<Pin>(HttpStatus.UNAUTHORIZED);
         }
-        pin.setUserName(user.getEmail());
+        pin.setUserName(userName);
         pin.setState(user.getRole().equals("user")? 0 : 1);
         if(pinService.savePin(pin)){
             return new ResponseEntity<Pin>(pin, HttpStatus.CREATED);

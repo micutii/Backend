@@ -50,21 +50,21 @@ public class ReviewRestController {
     @RequestMapping(
             value = "/create",
             method = RequestMethod.POST)
-    public ResponseEntity<Review> createReview(@RequestParam("idPin") int idPin, @RequestBody Review review){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByEmail(authentication.getName());
+    public ResponseEntity<Review> createReview(@RequestParam("idPin") int idPin, @RequestParam("user") String userName,
+                                               @RequestBody Review review){
+        User user = userService.findByEmail(userName);
         try {
             HttpResponse<JsonNode> response = Unirest.post("https://community-sentiment.p.mashape.com/text/")
                     .header("X-Mashape-Key", "Wjcxt8uJFJmsh8SYClq2XIZO3uBLp1dBiFfjsn7Iwu1RCsBGrs")
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .header("Accept", "application/json")
-                    .field("txt", review.getDetails())
+                    .field("txt", review.getFeedback())
                     .asJson();
             JSONObject result = response.getBody().getArray().getJSONObject(0).getJSONObject("result");
             String sentiment = result.get("sentiment").toString();
-            Object confidence = result.get("confidence");
+            String confidence = result.get("confidence").toString();
             log.info("S: " + sentiment + "  C: " + confidence);
-            review.setConfidence((Double) confidence);
+            review.setConfidence(confidence);
             review.setSentiment(sentiment);
         } catch (UnirestException e) {
             e.printStackTrace();

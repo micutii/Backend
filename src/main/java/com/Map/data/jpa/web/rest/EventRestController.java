@@ -55,10 +55,9 @@ public class EventRestController {
     @RequestMapping(
             value = "/create",
             method = RequestMethod.POST)
-    public ResponseEntity<Event> createEvent(@RequestBody Event event){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByEmail(authentication.getName());
-        event.setUserName(user.getEmail());
+    public ResponseEntity<Event> createEvent(@RequestBody Event event, @RequestParam("user") String userName){
+        User user = userService.findByEmail(userName);
+        event.setUserName(userName);
         event.setState(user.getRole().equals("user")? 0 : 1);
                 if(eventService.saveEvent(event)){
                     return new ResponseEntity<Event>(event, HttpStatus.OK);
@@ -69,13 +68,13 @@ public class EventRestController {
     @RequestMapping(
             value = "/update/{id}",
             method = RequestMethod.PUT)
-    public ResponseEntity<Event> updateEvent(@PathVariable("id") int idEvent, @RequestBody Event event){
-                Event oldEvent = eventService.getEvent(idEvent);
-        if(oldEvent == null){
+    public ResponseEntity<Event> updateEvent(@PathVariable("id") int idEvent){
+                Event event = eventService.getEvent(idEvent);
+        if(event == null){
             return new ResponseEntity<Event>(HttpStatus.NOT_FOUND);
         }
         else{
-            event.setIdEvent(idEvent);
+            event.setState(1);
             eventService.saveEvent(event);
             return new ResponseEntity<Event>(event,HttpStatus.OK);
         }

@@ -1,9 +1,6 @@
 package com.Map.data.jpa.domain;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -13,6 +10,6 @@ import java.util.List;
 public interface ReviewRepository extends CrudRepository<Review, Integer> {
     List<Review> findAll();
 
-    List<Review> findByIdPinOrderByRatingDesc(int idPin);
+    List<Review> findByIdPinAndSentimentOrderByConfidenceDesc(int idPin, String Sentiment);
 
 }

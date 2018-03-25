@@ -17,8 +17,12 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<Review> getTopReviews(int idPin) {
 
-        return reviewRepository.findByIdPinOrderByRatingDesc(idPin);
+        List<Review> review = reviewRepository.findByIdPinAndSentimentOrderByConfidenceDesc(idPin, "Positive");
+        review.addAll(reviewRepository.findByIdPinAndSentimentOrderByConfidenceDesc(idPin, "Neutral"));
+        review.addAll(reviewRepository.findByIdPinAndSentimentOrderByConfidenceDesc(idPin, "Negative"));
+        return review;
     }
+
 
     @Override
     public boolean saveReview(Review review) {

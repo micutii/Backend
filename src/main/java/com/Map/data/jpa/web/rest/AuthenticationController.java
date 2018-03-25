@@ -13,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "/api")
@@ -44,5 +41,17 @@ public class AuthenticationController {
         user.setPassword(encoder.encode(user.getPassword()));
         userService.saveUser(user);
         return new ResponseEntity<User>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/isAdmin", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> isAdmin(@RequestParam String userName) {
+        User user = userService.findByEmail(userName);
+        if ( user == null) {
+            return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
+        }
+        if(user.getRole().equals("admin")){
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
     }
 }

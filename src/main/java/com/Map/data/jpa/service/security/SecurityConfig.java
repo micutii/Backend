@@ -56,18 +56,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/login","/api/signup","/api/pins/getValid","/api/types/get").permitAll()
-                .antMatchers("/api/pins/create","/api/events/get","/api/events/create").permitAll() //User & admin
-                .antMatchers("/api/events/get",
-                            "/api/pins/get",
-                            "/api/pins/update/*",
-                            "/api/pins/delete/*",
+                .antMatchers("/api/pins/create",
+                            "/api/events/get",
+                            "/api/review/get",
+                            "/api/review/create",
+                            "/api/events/create",
+                            "/api/photos/get").hasAnyAuthority("user", "admin")
+                .antMatchers("/api/pins/get",
+                            "/api/pins/delete",
+                            "/api/pins/update",
                             "/api/types/create",
-                            "/api/types/update/*",
-                            "/api/types/delete/*").hasAuthority("admin")
+                            "/api/types/update",
+                            "/api/review/delete",
+                            "/api/review/create",
+                            "api/photos/create").hasAuthority("admin")
                 .and().httpBasic().authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                .and().logout().logoutUrl("/logout").addLogoutHandler(new CustomLogoutHandler());
+                .and().logout().logoutUrl("/logout").logoutSuccessHandler(new LogoutSuccessHandler() {
+            @Override
+            public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse
+                    httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                httpServletResponse.setStatus(200);
+            }
+        }).addLogoutHandler(new CustomLogoutHandler());
     }
 
     @Bean

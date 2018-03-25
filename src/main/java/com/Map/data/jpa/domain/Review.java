@@ -16,13 +16,13 @@ public class Review {
         @Column(name = "RATING")
         private int rating;
         @Column(name = "FEEDBACK")
-        private String details;;
+        private String feedback;;
         @Column(name = "USER_NAME")
         private String userName;
         @Column(name = "SENTIMENT")
         private String sentiment;
         @Column(name = "CONFIDENCE")
-        private Double confidence;
+        private String confidence;
 
     public int getIdReview() {
         return idReview;
@@ -48,13 +48,6 @@ public class Review {
         this.rating = rating;
     }
 
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
 
     public String getUserName() {
         return userName;
@@ -72,11 +65,19 @@ public class Review {
         this.sentiment = sentiment;
     }
 
-    public Double getConfidence() {
+    public String getConfidence() {
         return confidence;
     }
 
-    public void setConfidence(Double confidence) {
+    public void setConfidence(String confidence) {
         this.confidence = confidence;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 }
